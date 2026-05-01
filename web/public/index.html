@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Lab - Laboratorio Interactivo</title>
+
+  <!-- Monaco Editor (VSCode) -->
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.50.0/min/vs/editor/editor.main.css">
+
+  <!-- Marked.js para Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Estilos propios -->
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <div id="app" class="app-container">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-left">
+        <h1 class="logo">💾 SQL Lab</h1>
+      </div>
+      <nav class="header-nav" id="headerNav"></nav>
+      <div class="header-right">
+        <button id="resetBtn" class="btn-icon" title="Resetear BDs">🔄</button>
+      </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <div class="main-container">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-header">📚 Laboratorios</div>
+        <div id="labsList" class="labs-list"></div>
+        <div class="sidebar-footer">
+          <small>Progreso guardado automáticamente</small>
+        </div>
+      </aside>
+
+      <!-- CONTENT AREA -->
+      <div class="content-area">
+        <!-- PANEL IZQUIERDO: Instrucciones -->
+        <div class="panel left-panel">
+          <div class="panel-header">
+            <h2 id="labTitle">Selecciona un lab</h2>
+            <span id="labMeta" class="lab-meta"></span>
+          </div>
+          <div id="instructionsPanel" class="instructions-content">
+            <p>👈 Selecciona un laboratorio en la lista de la izquierda para comenzar.</p>
+          </div>
+        </div>
+
+        <!-- PANEL DERECHO: Editor + Resultados -->
+        <div class="panel right-panel">
+          <!-- EDITOR SQL -->
+          <div class="editor-section">
+            <div class="section-header">
+              <h3>📝 Editor SQL</h3>
+              <div class="editor-actions">
+                <button id="executeBtn" class="btn btn-primary" title="Ctrl+Enter">▶ Ejecutar</button>
+                <button id="checkBtn" class="btn btn-success" title="Verificar solución">✓ Verificar</button>
+              </div>
+            </div>
+            <div id="editor" class="editor"></div>
+          </div>
+
+          <!-- RESULTADOS -->
+          <div class="results-section">
+            <div class="section-header">
+              <h3>📊 Resultados</h3>
+              <button id="clearResultsBtn" class="btn-icon" title="Limpiar">✕</button>
+            </div>
+            <div id="resultsPanel" class="results-content">
+              <p class="placeholder">Ejecuta una consulta para ver resultados</p>
+            </div>
+          </div>
+
+          <!-- VALIDACIÓN -->
+          <div class="validation-section" style="display: none;" id="validationSection">
+            <div class="section-header">
+              <h3>✅ Validación</h3>
+              <button id="toggleValidationBtn" class="btn-icon">−</button>
+            </div>
+            <div id="validationPanel" class="validation-content"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.50.0/min/vs/loader.min.js"></script>
+  <script src="/js/editor.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

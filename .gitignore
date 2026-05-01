@@ -1,0 +1,27 @@
+# Claude Code documentation (local)
+CLAUDE.md
+
+# Development
+*.db
+*.sqlite
+*.sqlite3
+.DS_Store
+.env
+.env.local
+
+# IDE (Solo ignorar archivos locales, tasks.json/extensions.json SÍ suben)
+.idea/
+.vscode/settings.json
+.vscode/launch.json
+*.code-workspace
+
+# Node
+web/node_modules/
+web/package-lock.json
+
+# OS
+Thumbs.db
+
+# Local progress tracking
+.progress.json
+.attempts/

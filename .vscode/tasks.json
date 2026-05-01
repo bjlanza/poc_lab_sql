@@ -1,0 +1,75 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Check Lab 01-basics",
+      "type": "shell",
+      "command": "bash labs/01-basics/check.sh",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": "test"
+    },
+    {
+      "label": "Check Lab 02-joins",
+      "type": "shell",
+      "command": "bash labs/02-joins/check.sh",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": "test"
+    },
+    {
+      "label": "Check Lab 03-aggregates",
+      "type": "shell",
+      "command": "bash labs/03-aggregates/check.sh",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": "test"
+    },
+    {
+      "label": "Reset All Labs",
+      "type": "shell",
+      "command": "bash .devcontainer/setup.sh",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": "build"
+    },
+    {
+      "label": "Open Lab 01-basics DB",
+      "type": "shell",
+      "command": "sqlite3 /workspace/data/01-basics.db",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "isBackground": false
+    },
+    {
+      "label": "Open Lab 02-joins DB",
+      "type": "shell",
+      "command": "sqlite3 /workspace/data/02-joins.db",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "isBackground": false
+    },
+    {
+      "label": "Open Lab 03-aggregates DB",
+      "type": "shell",
+      "command": "sqlite3 /workspace/data/03-aggregates.db",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "isBackground": false
+    }
+  ]
+}

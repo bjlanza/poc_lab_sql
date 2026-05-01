@@ -1,0 +1,34 @@
+{
+  "name": "SQL Lab",
+  "image": "mcr.microsoft.com/devcontainers/base:debian",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "postStartCommand": "cd /workspace/web && npm start",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-sqlite"
+      ],
+      "settings": {
+        "sqltools.connections": [
+          {
+            "name": "lab.db",
+            "driver": "SQLite",
+            "database": "${workspaceFolder}/lab.db"
+          }
+        ]
+      }
+    }
+  },
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "SQL Lab Web UI",
+      "onAutoForward": "notify"
+    }
+  },
+  "remoteUser": "root"
+}
