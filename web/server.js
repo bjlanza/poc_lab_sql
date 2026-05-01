@@ -53,6 +53,19 @@ function getDatabase(labId) {
   }
 }
 
+// Helper: cargar hints de un lab
+function getHints(labId) {
+  const filePath = path.join(LABS_DIR, labId, 'hints.json');
+  try {
+    if (fs.existsSync(filePath)) {
+      return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    }
+  } catch (err) {
+    console.error(`Error leyendo hints para ${labId}:`, err);
+  }
+  return { hints: [] };
+}
+
 // Helper: leer progress.json
 function getProgress() {
   try {
@@ -95,6 +108,39 @@ app.get('/api/labs/:id/content', (req, res) => {
   } catch (err) {
     res.status(404).json({ error: 'Instrucciones no encontradas' });
   }
+});
+
+// GET /api/labs/:id/hints/:taskId/:level - Obtener hint progresivo
+app.get('/api/labs/:id/hints/:taskId/:level', (req, res) => {
+  const { id, taskId, level } = req.params;
+  const hintsData = getHints(id);
+
+  if (!hintsData.hints || hintsData.hints.length === 0) {
+    return res.status(404).json({ error: 'No hay hints para este lab' });
+  }
+
+  const hintTask = hintsData.hints.find(h => h.id === parseInt(taskId));
+  if (!hintTask) {
+    return res.status(404).json({ error: 'Tarea no encontrada' });
+  }
+
+  const levelNum = parseInt(level);
+  const hintLevel = hintTask.levels.find(l => l.level === levelNum);
+
+  if (!hintLevel) {
+    return res.status(404).json({ error: 'Nivel de hint no disponible' });
+  }
+
+  const maxLevel = hintTask.levels.length;
+  const nextLevel = levelNum < maxLevel ? levelNum + 1 : null;
+
+  res.json({
+    hint: hintLevel.hint,
+    level: levelNum,
+    maxLevel,
+    nextLevel,
+    canAskMore: nextLevel !== null
+  });
 });
 
 // POST /api/labs/:id/execute - Ejecutar SQL libre

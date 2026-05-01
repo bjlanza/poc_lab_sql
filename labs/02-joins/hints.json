@@ -1,0 +1,58 @@
+{
+  "hints": [
+    {
+      "id": 1,
+      "title": "INNER JOIN - Empleados y Departamentos",
+      "levels": [
+        {
+          "level": 1,
+          "hint": "Usa INNER JOIN para combinar datos de dos tablas cuando la clave existe en ambas."
+        },
+        {
+          "level": 2,
+          "hint": "Sintaxis: SELECT columnas FROM tabla1 INNER JOIN tabla2 ON tabla1.fk = tabla2.id; Necesitas columnas: name (employees), nombre del departamento, salary."
+        },
+        {
+          "level": 3,
+          "hint": "Ejecuta: SELECT employees.name, departments.name AS dept, employees.salary FROM employees INNER JOIN departments ON employees.dept_id = departments.id;"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "LEFT JOIN - Todos los departamentos",
+      "levels": [
+        {
+          "level": 1,
+          "hint": "Usa LEFT JOIN para incluir todas las filas de la tabla izquierda, incluso si no hay coincidencia en la derecha."
+        },
+        {
+          "level": 2,
+          "hint": "Sintaxis: SELECT columnas FROM tabla_izquierda LEFT JOIN tabla_derecha ON condicion; Aqui tabla_izquierda es 'departments' y tabla_derecha es 'employees'."
+        },
+        {
+          "level": 3,
+          "hint": "Ejecuta: SELECT departments.name AS dept, employees.name AS emp FROM departments LEFT JOIN employees ON departments.id = employees.dept_id;"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Crear vista employee_report",
+      "levels": [
+        {
+          "level": 1,
+          "hint": "Usa CREATE VIEW para guardar una consulta como si fuera una tabla."
+        },
+        {
+          "level": 2,
+          "hint": "Sintaxis: CREATE VIEW nombre AS SELECT ... ; El nombre es 'employee_report' y debe hacer INNER JOIN entre employees y departments."
+        },
+        {
+          "level": 3,
+          "hint": "Ejecuta: CREATE VIEW employee_report AS SELECT employees.name, departments.name AS dept, employees.salary FROM employees INNER JOIN departments ON employees.dept_id = departments.id;"
+        }
+      ]
+    }
+  ]
+}

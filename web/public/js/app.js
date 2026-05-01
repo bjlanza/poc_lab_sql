@@ -57,6 +57,9 @@ async function loadLab(labId) {
     window.UI.clearResults();
     window.UI.clearValidation();
 
+    // Restaurar estado de hints desde localStorage
+    restoreHintsState(labId);
+
     // Limpiar y resetear editor
     setSQLCode('-- Escribe tu SQL aquí\n');
 
@@ -179,9 +182,42 @@ function setupEventListeners() {
   });
 }
 
+// ============ HINTS STATE MANAGEMENT ============
+
+function saveHintsState(labId, taskId, level) {
+  const key = `hints_${labId}_${taskId}`;
+  localStorage.setItem(key, level);
+}
+
+function getHintLevel(labId, taskId) {
+  const key = `hints_${labId}_${taskId}`;
+  return parseInt(localStorage.getItem(key)) || 1;
+}
+
+function restoreHintsState(labId) {
+  // Restaurar estado de todos los botones de hints
+  setTimeout(() => {
+    const buttons = document.querySelectorAll('.hint-btn');
+    buttons.forEach(btn => {
+      const taskId = btn.dataset.taskId;
+      const savedLevel = getHintLevel(labId, taskId);
+
+      if (savedLevel > 1) {
+        btn.dataset.currentLevel = savedLevel;
+        // Recargar el hint último
+        if (savedLevel > 1) {
+          window.UI.requestHint(taskId);
+        }
+      }
+    });
+  }, 100);
+}
+
 // ============ GLOBALS (para acceso desde HTML/evento) ============
 
 window.loadLab = loadLab;
 window.getSQLCode = getSQLCode;
 window.setSQLCode = setSQLCode;
 window.clearEditor = clearEditor;
+window.saveHintsState = saveHintsState;
+window.getHintLevel = getHintLevel;

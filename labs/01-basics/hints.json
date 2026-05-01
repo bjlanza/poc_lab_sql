@@ -1,0 +1,76 @@
+{
+  "hints": [
+    {
+      "id": 1,
+      "title": "Obtener todos los empleados",
+      "levels": [
+        {
+          "level": 1,
+          "hint": "Usa SELECT * para obtener todas las columnas de una tabla."
+        },
+        {
+          "level": 2,
+          "hint": "La sintaxis es: SELECT * FROM nombre_tabla; Aquí la tabla es 'employees'."
+        },
+        {
+          "level": 3,
+          "hint": "Ejecuta: SELECT * FROM employees;"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Filtrar por departamento",
+      "levels": [
+        {
+          "level": 1,
+          "hint": "Usa WHERE para filtrar las filas que cumplen una condicion."
+        },
+        {
+          "level": 2,
+          "hint": "Sintaxis: SELECT * FROM tabla WHERE columna = valor; En este caso, columna es 'dept' y valor es 'Engineering'."
+        },
+        {
+          "level": 3,
+          "hint": "Ejecuta: SELECT * FROM employees WHERE dept = 'Engineering';"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Crear tabla de departamentos",
+      "levels": [
+        {
+          "level": 1,
+          "hint": "Usa CREATE TABLE para crear una nueva tabla. Necesitas definir columnas."
+        },
+        {
+          "level": 2,
+          "hint": "Sintaxis: CREATE TABLE nombre (columna1 tipo, columna2 tipo, ...); Los tipos son: INTEGER, TEXT, etc."
+        },
+        {
+          "level": 3,
+          "hint": "Ejecuta: CREATE TABLE departments (id INTEGER PRIMARY KEY, name TEXT);"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Insertar departamentos",
+      "levels": [
+        {
+          "level": 1,
+          "hint": "Usa INSERT INTO para agregar filas a una tabla."
+        },
+        {
+          "level": 2,
+          "hint": "Sintaxis: INSERT INTO tabla (columna1, columna2) VALUES (valor1, valor2); Necesitas insertar 3 filas: Engineering, Marketing, HR."
+        },
+        {
+          "level": 3,
+          "hint": "Ejecuta tres veces:\nINSERT INTO departments (id, name) VALUES (1, 'Engineering');\nINSERT INTO departments (id, name) VALUES (2, 'Marketing');\nINSERT INTO departments (id, name) VALUES (3, 'HR');"
+        }
+      ]
+    }
+  ]
+}

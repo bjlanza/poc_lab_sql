@@ -1,0 +1,76 @@
+{
+  "hints": [
+    {
+      "id": 1,
+      "title": "Contar empleados por departamento",
+      "levels": [
+        {
+          "level": 1,
+          "hint": "Usa GROUP BY para agrupar filas por una columna, y COUNT para contar."
+        },
+        {
+          "level": 2,
+          "hint": "Sintaxis: SELECT columna_grupo, COUNT(*) AS alias FROM tabla GROUP BY columna_grupo; Necesitas agrupar por departamento y contar empleados."
+        },
+        {
+          "level": 3,
+          "hint": "Ejecuta: SELECT departments.name AS dept, COUNT(employees.id) AS count FROM employees JOIN departments ON employees.dept_id = departments.id GROUP BY departments.id;"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Salario promedio por departamento",
+      "levels": [
+        {
+          "level": 1,
+          "hint": "Usa AVG() para calcular el promedio de una columna."
+        },
+        {
+          "level": 2,
+          "hint": "Sintaxis: SELECT columna_grupo, AVG(columna_valor) FROM tabla GROUP BY columna_grupo; Necesitas agrupar por departamento y promediar salary."
+        },
+        {
+          "level": 3,
+          "hint": "Ejecuta: SELECT departments.name AS dept, AVG(employees.salary) AS avg_salary FROM employees JOIN departments ON employees.dept_id = departments.id GROUP BY departments.id;"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Salario maximo y minimo",
+      "levels": [
+        {
+          "level": 1,
+          "hint": "Usa MAX() y MIN() para obtener los valores extremos."
+        },
+        {
+          "level": 2,
+          "hint": "Sintaxis: SELECT MAX(columna) AS maximo, MIN(columna) AS minimo FROM tabla; No necesitas GROUP BY porque buscas el maximo y minimo de toda la tabla."
+        },
+        {
+          "level": 3,
+          "hint": "Ejecuta: SELECT MAX(salary) AS max_salary, MIN(salary) AS min_salary FROM employees;"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Crear tabla dept_summary",
+      "levels": [
+        {
+          "level": 1,
+          "hint": "Usa CREATE TABLE AS para crear una tabla a partir de una consulta SELECT."
+        },
+        {
+          "level": 2,
+          "hint": "Sintaxis: CREATE TABLE nombre AS SELECT ... ; Necesitas hacer un GROUP BY de departamentos con COUNT, AVG y MAX de salary."
+        },
+        {
+          "level": 3,
+          "hint": "Ejecuta: CREATE TABLE dept_summary AS SELECT departments.id AS dept_id, COUNT(employees.id) AS total_employees, AVG(employees.salary) AS avg_salary, MAX(employees.salary) AS max_salary FROM employees JOIN departments ON employees.dept_id = departments.id GROUP BY departments.id;"
+        }
+      ]
+    }
+  ]
+}

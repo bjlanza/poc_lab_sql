@@ -336,6 +336,54 @@ html, body {
   font-style: italic;
 }
 
+/* HINTS */
+
+.hint-btn {
+  display: inline-block;
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: rgba(0, 180, 216, 0.15);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.hint-btn:hover:not(:disabled) {
+  background: rgba(0, 180, 216, 0.25);
+  color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.hint-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.hint-display {
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-md);
+  background: rgba(0, 180, 216, 0.1);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+}
+
+.hint-content {
+  color: var(--accent);
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.hint-error {
+  color: var(--error);
+  font-size: 12px;
+}
+
 /* ============ RIGHT PANEL SECTIONS ============ */
 
 .right-panel {

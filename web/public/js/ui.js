@@ -64,7 +64,68 @@ const UI = {
   // Renderizar instrucciones en Markdown
   renderInstructions: (markdown) => {
     const panel = document.getElementById('instructionsPanel');
-    panel.innerHTML = marked.parse(markdown);
+    const html = marked.parse(markdown);
+    panel.innerHTML = html;
+
+    // Agregar botones de hints a cada h3 (tarea)
+    const taskElements = panel.querySelectorAll('h3');
+    taskElements.forEach((h3, index) => {
+      const taskId = index + 1;
+      const hintBtn = document.createElement('button');
+      hintBtn.className = 'hint-btn';
+      hintBtn.textContent = 'Pedir ayuda';
+      hintBtn.dataset.taskId = taskId;
+      hintBtn.dataset.currentLevel = 1;
+      hintBtn.addEventListener('click', () => UI.requestHint(taskId));
+
+      const hintDiv = document.createElement('div');
+      hintDiv.className = 'hint-display';
+      hintDiv.style.display = 'none';
+      hintDiv.dataset.taskId = taskId;
+
+      h3.parentNode.insertBefore(hintBtn, h3.nextSibling);
+      h3.parentNode.insertBefore(hintDiv, hintBtn.nextSibling);
+    });
+  },
+
+  // Solicitar hint progresivo
+  requestHint: async (taskId) => {
+    const labId = window.currentLab;
+    const hintBtn = document.querySelector(`button[data-taskId="${taskId}"]`);
+    const hintDiv = document.querySelector(`div[data-taskId="${taskId}"]`);
+
+    if (!hintBtn || !hintDiv) return;
+
+    const currentLevel = parseInt(hintBtn.dataset.currentLevel) || 1;
+
+    try {
+      const res = await fetch(`/api/labs/${labId}/hints/${taskId}/${currentLevel}`);
+      const data = await res.json();
+
+      if (data.error) {
+        hintDiv.innerHTML = `<div class="hint-error">Error: ${data.error}</div>`;
+      } else {
+        hintDiv.innerHTML = `<div class="hint-content">${data.hint}</div>`;
+        hintDiv.style.display = 'block';
+
+        const nextLevel = data.nextLevel || data.maxLevel;
+        hintBtn.dataset.currentLevel = nextLevel;
+
+        // Guardar en localStorage
+        window.saveHintsState(labId, taskId, nextLevel);
+
+        if (!data.canAskMore) {
+          hintBtn.disabled = true;
+          hintBtn.textContent = 'Sin mas ayuda';
+          hintBtn.style.opacity = '0.5';
+        } else {
+          hintBtn.textContent = `Mas ayuda (${data.level}/${data.maxLevel})`;
+        }
+      }
+    } catch (err) {
+      hintDiv.innerHTML = `<div class="hint-error">Error al cargar hint: ${err.message}</div>`;
+      hintDiv.style.display = 'block';
+    }
   },
 
   // Renderizar metadata del lab
