@@ -4,8 +4,8 @@
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {}
   },
-  "postCreateCommand": "python3 setup.py && cd web && npm install",
-  "postStartCommand": "python3 setup.py && cd /workspace/web && npm start 2>/dev/null || echo 'Usa: cd web && npm start'",
+  "postCreateCommand": "cd /workspace && python3 init.py",
+  "postStartCommand": "cd /workspace/web && npm start",
   "customizations": {
     "vscode": {
       "extensions": [

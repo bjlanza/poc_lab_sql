@@ -1,14 +1,16 @@
 # SQL Lab - Quick Start
 
-## Un Comando (Recomendado)
+## Instalación
 
-### Opción 1: Python (Más Portable)
+### Opción 1: Python (Recomendado - Manual)
 
 ```bash
-python3 setup.py
+python3 init.py
 ```
 
-Luego:
+Instala Node.js, SQLite, npm dependencies y BDs.
+
+Luego arranca:
 ```bash
 cd web
 npm start
@@ -16,24 +18,24 @@ npm start
 
 Abre: http://localhost:3000
 
-### Opción 2: Bash (Solo Linux/Mac)
+### Opción 2: Bash (Solo Linux/Mac - Manual)
 
 ```bash
-bash install.sh
+bash init.sh
 ```
+
+Instala y arranca todo.
 
 ---
 
-## En GitHub Codespaces
+## En GitHub Codespaces (Automático)
 
-Todo automático. Solo espera a que diga:
+1. Crear Codespace
+2. Espera a que `init.py` termine (instala todo automáticamente)
+3. El servidor se arranca automáticamente
+4. Abre http://localhost:3000
 
-```
-npm start
-> SQL Lab Web UI corriendo en http://localhost:3000
-```
-
-Haz click en el puerto 3000.
+Sin hacer nada. Todo automático.
 
 ---
 
