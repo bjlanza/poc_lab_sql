@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# SQL Lab - Inicialización
+# Un solo script que lo hace todo
+
+set -e
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+echo -e "\n${BLUE}=== SQL Lab Init ===${NC}\n"
+
+# 1. Node.js
+if ! command -v node &>/dev/null; then
+  echo "1. Instalando Node.js..."
+  apt-get update -y
+  apt-get install -y nodejs npm
+else
+  echo "1. Node.js: $(node -v)"
+fi
+
+# 2. SQLite
+if ! command -v sqlite3 &>/dev/null; then
+  echo "2. Instalando SQLite..."
+  apt-get install -y sqlite3
+else
+  echo "2. SQLite: $(sqlite3 --version | awk '{print $1}')"
+fi
+
+# 3. npm install
+echo "3. Instalando dependencias..."
+cd web
+npm install --prefer-offline --no-audit
+cd ..
+
+# 4. Directorios
+echo "4. Creando directorios..."
+mkdir -p /workspace/data
+
+# 5. BDs
+echo "5. Inicializando BDs..."
+for lab in 01-basics 02-joins 03-aggregates; do
+  sqlite3 /workspace/data/$lab.db < labs/$lab/init.sql
+  echo "   ✓ $lab.db"
+done
+
+# 6. Progress
+echo "6. Creando progress file..."
+echo '{"started": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'", "labs": {}}' > /workspace/.progress.json
+
+echo -e "\n${GREEN}Listo!${NC}"
+echo "Para arrancar:"
+echo "  cd web"
+echo "  npm start"
+echo ""
+echo "Luego: http://localhost:3000"
+echo ""

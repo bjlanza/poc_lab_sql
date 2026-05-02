@@ -27,14 +27,30 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function loadAllLabs() {
   try {
+    console.log('Cargando labs desde /api/labs...');
     const response = await fetch('/api/labs');
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
     allLabs = await response.json();
+    console.log('Labs cargados:', allLabs);
+
+    if (!allLabs || allLabs.length === 0) {
+      console.error('No hay labs!');
+      document.getElementById('instructionsPanel').innerHTML =
+        '<p style="color:red;">Error: No se cargaron los labs. Revisa la consola.</p>';
+      return;
+    }
 
     // Renderizar UI
     window.UI.renderLabsList(allLabs);
     window.UI.renderHeaderNav(allLabs);
   } catch (err) {
     console.error('Error cargando labs:', err);
+    document.getElementById('instructionsPanel').innerHTML =
+      `<p style="color:red;">Error cargando labs: ${err.message}</p>`;
   }
 }
 

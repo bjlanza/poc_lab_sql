@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# SQL Lab - Verificación Rápida
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+echo -e "\n${BLUE}=== SQL Lab Check ===${NC}\n"
+
+errors=0
+
+# Node.js
+if command -v node &>/dev/null; then
+  echo -e "${GREEN}✓${NC} Node.js: $(node -v)"
+else
+  echo -e "${RED}✗${NC} Node.js NO instalado"
+  ((errors++))
+fi
+
+# npm
+if command -v npm &>/dev/null; then
+  echo -e "${GREEN}✓${NC} npm: $(npm -v)"
+else
+  echo -e "${RED}✗${NC} npm NO instalado"
+  ((errors++))
+fi
+
+# SQLite
+if command -v sqlite3 &>/dev/null; then
+  echo -e "${GREEN}✓${NC} SQLite: $(sqlite3 --version | awk '{print $1}')"
+else
+  echo -e "${RED}✗${NC} SQLite NO instalado"
+  ((errors++))
+fi
+
+# npm dependencies
+if [ -d "web/node_modules" ]; then
+  echo -e "${GREEN}✓${NC} node_modules existe"
+else
+  echo -e "${YELLOW}!${NC} node_modules NO existe"
+fi
+
+# BDs
+for lab in 01-basics 02-joins 03-aggregates; do
+  if [ -f "/workspace/data/$lab.db" ]; then
+    tables=$(sqlite3 /workspace/data/$lab.db "SELECT COUNT(*) FROM sqlite_master WHERE type='table';" 2>/dev/null || echo "0")
+    echo -e "${GREEN}✓${NC} $lab.db ($tables tablas)"
+  else
+    echo -e "${YELLOW}!${NC} $lab.db NO existe"
+  fi
+done
+
+echo ""
+if [ $errors -eq 0 ]; then
+  echo -e "${GREEN}Todo OK${NC}"
+  exit 0
+else
+  echo -e "${RED}$errors errores - ejecuta: bash init${NC}"
+  exit 1
+fi
