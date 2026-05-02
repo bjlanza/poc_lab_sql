@@ -51,10 +51,33 @@ done
 echo "6. Creando progress file..."
 echo '{"started": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'", "labs": {}}' > /workspace/.progress.json
 
-echo -e "\n${GREEN}Listo!${NC}"
-echo "Para arrancar:"
-echo "  cd web"
-echo "  npm start"
-echo ""
-echo "Luego: http://localhost:3000"
-echo ""
+# 7. Lanzar servidor en background
+echo "7. Iniciando servidor..."
+cd web
+npm start > /workspace/.server.log 2>&1 &
+SERVER_PID=$!
+echo $SERVER_PID > /workspace/.server.pid
+cd ..
+
+# Esperar a que el servidor esté listo (curl al endpoint)
+max_attempts=30
+attempt=0
+while ! curl -s http://localhost:3000 > /dev/null 2>&1 && [ $attempt -lt $max_attempts ]; do
+  sleep 1
+  attempt=$((attempt + 1))
+done
+
+if curl -s http://localhost:3000 > /dev/null 2>&1; then
+  echo -e "\n${GREEN}✓ Servidor listo${NC}\n"
+  echo -e "${BLUE}SQL Lab está corriendo!${NC}"
+  echo ""
+  echo "Abre en tu navegador:"
+  echo "  ${YELLOW}http://localhost:3000${NC}"
+  echo ""
+  echo "La terminal está libre para usar. El servidor corre en background."
+  echo ""
+else
+  echo -e "\n${YELLOW}⚠ Servidor aún iniciando...${NC}"
+  echo "Revisa: tail -f /workspace/.server.log"
+  echo ""
+fi
